@@ -35,26 +35,72 @@ if (isset($_POST['update_student'])) {
     $tmp_name = $_FILES['my_image']['tmp_name'];
     $error = $_FILES['my_image']['error'];
 
-    if ($old_image != '') {
-        echo 'ciao';
-        exit;
+    // image upload
+    if ($img_size != 0) {
+        if ($error === 0) {
+            if ($img_size > 1250000) {
+                $_SESSION['message'] = "Image size is too large";
+                header("Location: student-create.php");
+                exit(0);
+            } else {
+                $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                $img_ex_lc = strtolower($img_ex);
+
+                $allowed_exs = array("jpg", "jpeg", "png");
+
+                if (in_array($img_ex_lc, $allowed_exs)) {
+                    $new_img_name = uniqid("IMG-", true) . '.' . $img_ex_lc;
+                    $img_upload_path = 'uploads/' . $new_img_name;
+                    move_uploaded_file($tmp_name, $img_upload_path);
+
+                    // Insert into Database with image
+                    $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$new_img_name' WHERE id='$student_id' ";
+
+                    $query_run = mysqli_query($con, $query);
+                    if ($query_run) {
+                        $_SESSION['message'] = "Student Created Successfully";
+                        header("Location: student-create.php");
+                        exit(0);
+                    } else {
+                        $_SESSION['message'] = "Student Not Created";
+                        header("Location: student-create.php");
+                        exit(0);
+                    }
+                } else {
+                    $_SESSION['message'] = "You can't upload files of this type";
+                    header("Location: student-create.php");
+                    exit(0);
+                }
+            }
+        }
     } else {
-        echo 'nah';
-        exit;
+        // UPDATE into Database without image
+        $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$old_image', WHERE id='$student_id' ";
+
+        $query_run = mysqli_query($con, $query);
+        if ($query_run) {
+            $_SESSION['message'] = "Student Created Successfully";
+            header("Location: student-create.php");
+            exit(0);
+        } else {
+            $_SESSION['message'] = "Student Not Created";
+            header("Location: student-create.php");
+            exit(0);
+        }
     }
 
-    $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course' WHERE id='$student_id' ";
-    $query_run = mysqli_query($con, $query);
+    // $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course' WHERE id='$student_id' ";
+    // $query_run = mysqli_query($con, $query);
 
-    if ($query_run) {
-        $_SESSION['message'] = "Student Updated Successfully";
-        header("Location: index.php");
-        exit(0);
-    } else {
-        $_SESSION['message'] = "Student Not Updated";
-        header("Location: index.php");
-        exit(0);
-    }
+    // if ($query_run) {
+    //     $_SESSION['message'] = "Student Updated Successfully";
+    //     header("Location: index.php");
+    //     exit(0);
+    // } else {
+    //     $_SESSION['message'] = "Student Not Updated";
+    //     header("Location: index.php");
+    //     exit(0);
+    // }
 }
 
 // create
