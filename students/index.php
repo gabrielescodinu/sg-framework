@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
         <div>
 
             <?php include('message.php'); ?>
-
+            <a href="../index.php">back</a>
             <a href="student-create.php">Add Students</a>
 
             <table>
@@ -33,6 +33,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Course</th>
+                        <th>Image</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -50,6 +51,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
                                 <td><?= $student['email']; ?></td>
                                 <td><?= $student['phone']; ?></td>
                                 <td><?= $student['course']; ?></td>
+                                <td><img style="width: 100px" src="uploads/<?= $student['image_url']; ?>" alt=""></td>
                                 <td>
                                     <a href="student-edit.php?id=<?= $student['id']; ?>">Edit</a>
                                     <form action="code.php" method="POST">

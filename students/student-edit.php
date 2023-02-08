@@ -37,7 +37,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
                     if (mysqli_num_rows($query_run) > 0) {
                         $student = mysqli_fetch_array($query_run);
                 ?>
-                        <form action="code.php" method="POST">
+                        <form action="code.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="student_id" value="<?= $student['id']; ?>">
 
                             <div>
@@ -56,6 +56,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
                                 <label>Student Course</label>
                                 <input type="text" name="course" value="<?= $student['course']; ?>">
                             </div>
+                            <input type="file" name="my_image">
                             <div>
                                 <button type="submit" name="update_student">
                                     Update Student

@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
         <div>
 
             <?php include('message.php'); ?>
-
+            <a href="../index.php">back</a>
             <a href="user-create.php">Add users</a>
 
             <table>
