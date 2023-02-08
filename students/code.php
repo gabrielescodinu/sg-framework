@@ -28,6 +28,20 @@ if (isset($_POST['update_student'])) {
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $phone = mysqli_real_escape_string($con, $_POST['phone']);
     $course = mysqli_real_escape_string($con, $_POST['course']);
+    $old_image = mysqli_real_escape_string($con, $_POST['old_image']);
+
+    $img_name = $_FILES['my_image']['name'];
+    $img_size = $_FILES['my_image']['size'];
+    $tmp_name = $_FILES['my_image']['tmp_name'];
+    $error = $_FILES['my_image']['error'];
+
+    if ($old_image != '') {
+        echo 'ciao';
+        exit;
+    } else {
+        echo 'nah';
+        exit;
+    }
 
     $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course' WHERE id='$student_id' ";
     $query_run = mysqli_query($con, $query);

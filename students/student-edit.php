@@ -57,6 +57,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
                                 <input type="text" name="course" value="<?= $student['course']; ?>">
                             </div>
                             <input type="file" name="my_image">
+                            <input type="text" name="old_image" value="<?= $student['image_url']; ?>">
                             <div>
                                 <button type="submit" name="update_student">
                                     Update Student
