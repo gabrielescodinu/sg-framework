@@ -44,6 +44,7 @@
                             <label>Student Course</label>
                             <p> <?= $student['course']; ?> </p>
                         </div>
+                        <img src="uploads/<?= $student['image_url']; ?>" alt="">
 
                 <?php
                     } else {

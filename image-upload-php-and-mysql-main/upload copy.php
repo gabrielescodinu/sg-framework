@@ -28,7 +28,7 @@ if (isset($_POST['submit']) && isset($_FILES['my_image'])) {
 				move_uploaded_file($tmp_name, $img_upload_path);
 
 				// Insert into Database
-				$sql = "INSERT INTO images(image_url) VALUES('$new_img_name')";
+				$sql = "INSERT INTO students(image_url) VALUES('$new_img_name')";
 				mysqli_query($conn, $sql);
 				header("Location: view.php");
 			} else {

@@ -21,7 +21,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
 
             <h4>Student Add <a href="index.php">BACK</a></h4>
 
-            <form action="code.php" method="POST">
+            <form action="code.php" method="POST" enctype="multipart/form-data">
 
                 <div>
                     <label>Student Name</label>
