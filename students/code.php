@@ -75,7 +75,7 @@ if (isset($_POST['update_student'])) {
         }
     } else {
         // UPDATE into Database without image
-        $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$old_image', WHERE id='$student_id' ";
+        $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$old_image' WHERE id='$student_id' ";
 
         $query_run = mysqli_query($con, $query);
         if ($query_run) {
