@@ -51,7 +51,9 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email']) && $_SESSION['
                                 <td><?= $student['email']; ?></td>
                                 <td><?= $student['phone']; ?></td>
                                 <td><?= $student['course']; ?></td>
-                                <td><img style="width: 100px" src="uploads/<?= $student['image_url']; ?>" alt=""></td>
+                                <td><img style="width: 100px" src="uploads/<?= $student['image_url']; ?>" alt="">
+                                    <input type="hidden" name="old_image" value="<?= $student['image_url']; ?>">
+                                </td>
                                 <td>
                                     <a href="student-edit.php?id=<?= $student['id']; ?>">Edit</a>
                                     <form action="code.php" method="POST">

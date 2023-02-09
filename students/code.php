@@ -6,6 +6,11 @@ require '../db_conn.php';
 if (isset($_POST['delete_student'])) {
     $student_id = mysqli_real_escape_string($con, $_POST['delete_student']);
 
+    // delete old image
+    echo $old_image = mysqli_real_escape_string($con, $_POST['old_image']);
+    exit;
+    $deleteOldImage = unlink('uploads/'.$old_image);
+
     $query = "DELETE FROM students WHERE id='$student_id' ";
     $query_run = mysqli_query($con, $query);
 
@@ -53,8 +58,9 @@ if (isset($_POST['update_student'])) {
                     $img_upload_path = 'uploads/' . $new_img_name;
                     move_uploaded_file($tmp_name, $img_upload_path);
 
-                    // update into databes with new image
+                    // delete old image
                     $deleteOldImage = unlink('uploads/'.$old_image);
+                    // update into databes with new image
                     $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$new_img_name' WHERE id='$student_id' ";
 
                     $query_run = mysqli_query($con, $query);

@@ -2,6 +2,7 @@
 session_start();
 require '../db_conn.php';
 
+// delete ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(isset($_POST['delete_user']))
 {
     $user_id = mysqli_real_escape_string($con, $_POST['delete_user']);
@@ -23,6 +24,7 @@ if(isset($_POST['delete_user']))
     }
 }
 
+// update ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(isset($_POST['update_user']))
 {
     $user_id = mysqli_real_escape_string($con, $_POST['user_id']);
@@ -56,7 +58,7 @@ if(isset($_POST['update_user']))
 
 }
 
-
+// create ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(isset($_POST['save_user']))
 {
     $full_name = mysqli_real_escape_string($con, $_POST['full_name']);
