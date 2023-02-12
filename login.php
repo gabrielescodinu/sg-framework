@@ -35,6 +35,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_email'])) {
 				<button type="submit" class="btn btn-primary">LOGIN
 				</button>
 			</form>
+			<a href="students/list.php">Students</a>
 		</div>
 	</body>
 
