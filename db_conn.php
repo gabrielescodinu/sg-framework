@@ -3,7 +3,7 @@
 // connection for authentication
 $sName = "localhost";
 $uName = "root";
-$pass = "root12345";
+$pass = "password";
 $db_name = "test_db";
 
 try {
@@ -18,7 +18,7 @@ try {
 }
 
 // connection for objects
-$con = mysqli_connect("localhost", "root", "root12345", "test_db");
+$con = mysqli_connect("localhost", "root", "password", "test_db");
 
 if (!$con) {
     die('Connection Failed' . mysqli_connect_error());

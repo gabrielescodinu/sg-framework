@@ -3,38 +3,35 @@ session_start();
 require '../db_conn.php';
 
 //delete ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if (isset($_POST['delete_student'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['delete_student']);
+if (isset($_POST['delete_category'])) {
+    $category_id = mysqli_real_escape_string($con, $_POST['delete_category']);
 
     // delete old image
-    $query = "SELECT image_url FROM students WHERE id='$student_id' ";
+    $query = "SELECT image_url FROM categories WHERE id='$category_id' ";
     $query_run = mysqli_query($con, $query);
-    $student = mysqli_fetch_array($query_run);
-    $old_image = $student['image_url'];
+    $category = mysqli_fetch_array($query_run);
+    $old_image = $category['image_url'];
     $deleteOldImage = unlink('uploads/'.$old_image);
 
-    $query = "DELETE FROM students WHERE id='$student_id' ";
+    $query = "DELETE FROM categories WHERE id='$category_id' ";
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
-        $_SESSION['message'] = "Student Deleted Successfully";
+        $_SESSION['message'] = "Category Deleted Successfully";
         header("Location: index.php");
         exit(0);
     } else {
-        $_SESSION['message'] = "Student Not Deleted";
+        $_SESSION['message'] = "Category Not Deleted";
         header("Location: index.php");
         exit(0);
     }
 }
 
 // update ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if (isset($_POST['update_student'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
+if (isset($_POST['update_category'])) {
+    $category_id = mysqli_real_escape_string($con, $_POST['category_id']);
 
     $name = mysqli_real_escape_string($con, $_POST['name']);
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $phone = mysqli_real_escape_string($con, $_POST['phone']);
-    $course = mysqli_real_escape_string($con, $_POST['course']);
     $old_image = mysqli_real_escape_string($con, $_POST['old_image']);
 
     $img_name = $_FILES['my_image']['name'];
@@ -47,7 +44,7 @@ if (isset($_POST['update_student'])) {
         if ($error === 0) {
             if ($img_size > 1250000) {
                 $_SESSION['message'] = "Image size is too large";
-                header("Location: student-edit.php");
+                header("Location: category-edit.php");
                 exit(0);
             } else {
                 $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
@@ -63,37 +60,37 @@ if (isset($_POST['update_student'])) {
                     // delete old image
                     $deleteOldImage = unlink('uploads/'.$old_image);
                     // update into databes with new image
-                    $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$new_img_name' WHERE id='$student_id' ";
+                    $query = "UPDATE categories SET name='$name', image_url='$new_img_name' WHERE id='$category_id' ";
 
                     $query_run = mysqli_query($con, $query);
                     if ($query_run) {
-                        $_SESSION['message'] = "Student Updated Successfully";
-                        header("Location: student-edit.php");
+                        $_SESSION['message'] = "Category Updated Successfully";
+                        header("Location: category-edit.php");
                         exit(0);
                     } else {
-                        $_SESSION['message'] = "Student Not Updated";
-                        header("Location: student-edit.php");
+                        $_SESSION['message'] = "Category Not Updated";
+                        header("Location: category-edit.php");
                         exit(0);
                     }
                 } else {
                     $_SESSION['message'] = "You can't upload files of this type";
-                    header("Location: student-edit.php");
+                    header("Location: category-edit.php");
                     exit(0);
                 }
             }
         }
     } else {
         // update into Database without change image
-        $query = "UPDATE students SET name='$name', email='$email', phone='$phone', course='$course', image_url='$old_image' WHERE id='$student_id' ";
+        $query = "UPDATE categories SET name='$name', image_url='$old_image' WHERE id='$category_id' ";
 
         $query_run = mysqli_query($con, $query);
         if ($query_run) {
-            $_SESSION['message'] = "Student Updated Successfully";
-            header("Location: student-edit.php");
+            $_SESSION['message'] = "Category Updated Successfully";
+            header("Location: category-edit.php");
             exit(0);
         } else {
-            $_SESSION['message'] = "Student Not Updated";
-            header("Location: student-edit.php");
+            $_SESSION['message'] = "Category Not Updated";
+            header("Location: category-edit.php");
             exit(0);
         }
     }
@@ -101,11 +98,8 @@ if (isset($_POST['update_student'])) {
 }
 
 // create ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if (isset($_POST['save_student'])) {
+if (isset($_POST['save_category'])) {
     $name = mysqli_real_escape_string($con, $_POST['name']);
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $phone = mysqli_real_escape_string($con, $_POST['phone']);
-    $course = mysqli_real_escape_string($con, $_POST['course']);
 
     $img_name = $_FILES['my_image']['name'];
     $img_size = $_FILES['my_image']['size'];
@@ -117,7 +111,7 @@ if (isset($_POST['save_student'])) {
         if ($error === 0) {
             if ($img_size > 1250000) {
                 $_SESSION['message'] = "Image size is too large";
-                header("Location: student-create.php");
+                header("Location: category-create.php");
                 exit(0);
             } else {
                 $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
@@ -131,37 +125,37 @@ if (isset($_POST['save_student'])) {
                     move_uploaded_file($tmp_name, $img_upload_path);
 
                     // Insert into Database with image
-                    $query = "INSERT INTO students (name,email,phone,course,image_url) VALUES ('$name','$email','$phone','$course','$new_img_name')";
+                    $query = "INSERT INTO categories (name,image_url) VALUES ('$name','$new_img_name')";
 
                     $query_run = mysqli_query($con, $query);
                     if ($query_run) {
-                        $_SESSION['message'] = "Student Created Successfully";
-                        header("Location: student-create.php");
+                        $_SESSION['message'] = "Category Created Successfully";
+                        header("Location: category-create.php");
                         exit(0);
                     } else {
-                        $_SESSION['message'] = "Student Not Created";
-                        header("Location: student-create.php");
+                        $_SESSION['message'] = "Category Not Created";
+                        header("Location: category-create.php");
                         exit(0);
                     }
                 } else {
                     $_SESSION['message'] = "You can't upload files of this type";
-                    header("Location: student-create.php");
+                    header("Location: category-create.php");
                     exit(0);
                 }
             }
         }
     } else {
         // Insert into Database without image
-        $query = "INSERT INTO students (name,email,phone,course,image_url) VALUES ('$name','$email','$phone','$course','')";
+        $query = "INSERT INTO categories (name,image_url) VALUES ('$name','')";
 
         $query_run = mysqli_query($con, $query);
         if ($query_run) {
-            $_SESSION['message'] = "Student Created Successfully";
-            header("Location: student-create.php");
+            $_SESSION['message'] = "Category Created Successfully";
+            header("Location: category-create.php");
             exit(0);
         } else {
-            $_SESSION['message'] = "Student Not Created";
-            header("Location: student-create.php");
+            $_SESSION['message'] = "Category Not Created";
+            header("Location: category-create.php");
             exit(0);
         }
     }
